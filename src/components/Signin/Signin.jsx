@@ -28,13 +28,15 @@ function Signin() {
       password,
     }
     try {
-      const res = await fetch("https://taskorganizer-nb9b.onrender.com/api/v1/users/signin", 
+      const res = await fetch("http://localhost:13000/api/v1/users/signin", 
       {
         method:"POST",
         headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        // "Access-Control-Allow-Origin": true,
       },
-        body: JSON.stringify(req)
+        body: JSON.stringify(req),
+        credentials: 'include',
       })
       if(!res.ok)
       {
@@ -42,7 +44,7 @@ function Signin() {
         return
       }
       console.log(await res.json())
-      
+      navigate(`/${username}`)      
     } catch (error) {
       console.log("Sorry some error occored while an api call ", error)
     }

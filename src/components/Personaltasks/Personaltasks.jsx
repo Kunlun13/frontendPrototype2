@@ -55,13 +55,67 @@ import React, { useEffect, useState } from 'react'
     setupdateTaskOpacity("flex");
     console.log(groupId)
   }
+
+
+  
   const [updateTaskOpacity, setupdateTaskOpacity] = useState("none")
+  const [updateGroupOpacity, setupdateGroupOpacity] = useState("none")
+  const [taskDisplay, settaskDisplay] = useState("flex")
+
+  const [groupName, setGroupName] = useState("")
+  const [groupDetail, setGroupDetail] = useState("")
+  
+  function showNewGroup(){
+    if(updateGroupOpacity=="none")
+      {
+        setupdateGroupOpacity("flex")
+        settaskDisplay("none");
+      }
+    else
+    {
+      setupdateGroupOpacity("none")
+      settaskDisplay("flex")
+      
+    }
+  }
+
+  async function createNewGroup(){
+    const req = {
+      name: groupName,
+      aboutGroup: groupDetail
+    }
+    try {
+      const res = await fetch("http://localhost:13000/api/v1/users/newPersonalGroup",{
+        method:"POST",
+        headers:{
+          "Content-Type" : "application/json"
+        },
+        credentials:"include",
+        body:JSON.stringify(req),
+      })
+
+      if(!res.ok)
+      {
+        console.log(res)
+        return console.log("response is not Ok!!")
+      }
+
+      showNewGroup()
+      setLoading(true)
+
+    } catch (error) {
+      console.log(error)
+      console.log("Some Error occured while creating group!!")
+    }
+  }
 
   if (loading)
   return "Loading"
 
   return (
-    <div className='flex relative bg-gray-800 rounded-2xl h-full text-white border-10 border-gray-600  flex-wrap overflow-y-auto py-5' style={{WebkitScrollSnapType:'block'}}>
+    <div className='flex relative w-full bg-gray-800 rounded-2xl h-full text-white border-10 border-gray-600  flex-wrap overflow-y-auto py-5' style={{WebkitScrollSnapType:'block'}}>
+
+        <div className='flex relative h-full w-full overflow-y-auto flex-wrap' style={{display:taskDisplay}}>
 
         {
           list.map((element)=>{
@@ -84,10 +138,13 @@ import React, { useEffect, useState } from 'react'
           })
         }
 
-        <div className={style2} style={{backgroundColor:`#03fcf010`}} >
+        <div className={style2} style={{backgroundColor:`#03fcf010`}} onClick={()=>{
+          showNewGroup();
+        }} >
             +
         </div>
 
+        </div>
         <div className='absolute p-5 w-full h-full bg-gray-800' style={{display:updateTaskOpacity}} >
           back
 
@@ -100,6 +157,44 @@ import React, { useEffect, useState } from 'react'
                     </div>
                   })
               }
+          </div>
+
+        </div>
+
+        <div className='absolute flex flex-col items-start p-5 w-full h-full bg-gray-800' style={{display:updateGroupOpacity}} >
+          <div className='w-full flex justify-start '>
+          <button className='text-green-400 hover:text-green-300' onClick={()=>{
+            showNewGroup()
+          }}>Back</button>
+          </div>
+
+          <div className='flex justify-center items-center w-full self-center h-full'>
+
+            <div>
+
+            <div className='m-5'>
+                        <input value={groupName} className='text-green-300 border-2 border-green-700 p-2 outline-none p-2' type="text" placeholder='Task Group Name'
+                        onChange={(e)=>{
+                          setGroupName(e.target.value)
+                        }}
+                        />    
+            </div>
+            <div className='m-5'>
+              <textarea value={groupDetail} id="" className='text-green-300 border-2 border-green-700 p-2 outline-none w-64 h-30' 
+              onChange={(e)=>{
+                setGroupDetail(e.target.value)
+              }}
+               placeholder='Task Group details'></textarea>  
+            </div>
+            <div className='flex justify-center items-center'>
+
+            <button className='p-3 bg-gradient-to-r 
+            from-green-700 to-green-500 rounded-2xl
+            shadow-md shadow-green-300 hover:from-green-600 hover:to-green-600' onClick={()=>{
+              createNewGroup()
+            }}>Create New Group</button>
+            </div>
+            </div>
           </div>
 
         </div>

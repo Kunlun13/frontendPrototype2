@@ -111,7 +111,12 @@ function Personaltasks() {
   const [groupName, setGroupName] = useState("")
   const [groupDetail, setGroupDetail] = useState("")
 
-  async function showNewGroup() {
+  async function showNewGroup(group, name, detail) {
+      setCurrentGroup(group)
+      setGroupName(name)
+      setGroupDetail(detail)
+    
+    
     if (updateGroupOpacity == "none") {
       setupdateGroupOpacity("flex")
       settaskDisplay("none");
@@ -149,7 +154,7 @@ function Personaltasks() {
 
       // const data = await res.json()
       // setTasks(data)
-      // setLoadingTask(false)
+      setLoadingTask(false)
       loadTasks(currentGroup)
       console.log(data)
     } catch (error) {
@@ -196,7 +201,10 @@ function Personaltasks() {
     loadTasks(element.group)
   }
 
-  async function createNewGroup() {
+  async function createNewGroup(group) {
+
+    if(!group){
+
     const req = {
       name: groupName,
       aboutGroup: groupDetail
@@ -216,14 +224,47 @@ function Personaltasks() {
         return console.log("response is not Ok!!")
       }
 
-      showNewGroup()
+      showNewGroup("", "", "")
       displayTodos()
-      setLoading(true)
+      // setLoading(true)
 
     } catch (error) {
       console.log(error)
       console.log("Some Error occured while creating group!!")
     }
+  }
+  else{
+    const req = {
+      name: groupName,
+      aboutGroup: groupDetail,
+      group
+    }
+    setGroupName("")
+    setGroupDetail("")
+    try {
+      const res = await fetch("http://localhost:13000/api/v1/users/editGroup", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(req),
+      })
+
+      if (!res.ok) {
+        console.log(res)
+        return console.log("response is not Ok!!")
+      }
+
+      showNewGroup("", "", "")
+      displayTodos()
+      // setLoading(true)
+
+    } catch (error) {
+      console.log(error)
+      console.log("Some Error occured while creating group!!")
+    }
+  }
   }
 
   // if (loading)
@@ -262,6 +303,7 @@ function Personaltasks() {
                 <div className='text-gray-950 hover:text-gray-400'
                 onClick={(e)=>{
                   e.stopPropagation()
+                  showNewGroup(element._id, element.name, element.aboutGroup)
                 }}
                 >Edit</div>
                 <button className='text-gray-950 hover:text-red-400 shadow' 
@@ -287,7 +329,7 @@ function Personaltasks() {
                       return console.log("response is not Ok!!")
                     }
                     displayTodos()
-                    setLoading(true)
+                    // setLoading(true)
               
                   } catch (error) {
                     console.log(error)
@@ -302,7 +344,7 @@ function Personaltasks() {
         }
 
         <div className={style2} style={{ backgroundColor: `#03fcf010` }} onClick={() => {
-          showNewGroup();
+          showNewGroup("", "", "");
         }} >
           +
         </div>
@@ -394,7 +436,7 @@ function Personaltasks() {
       <div className='absolute flex flex-col items-start p-5 w-full h-full bg-gray-800' style={{ display: updateGroupOpacity }} >
         <div className='w-full flex justify-start '>
           <button className='text-green-400 hover:text-green-300' onClick={() => {
-            showNewGroup()
+            showNewGroup("", "", "")
           }}>Back</button>
         </div>
 
@@ -403,7 +445,7 @@ function Personaltasks() {
           <div>
 
             <div className='m-5'>
-              <input value={groupName} className='text-green-300 border-2 border-green-700 p-2 outline-none p-2' type="text" placeholder='Task Group Name'
+              <input value={groupName} className='text-green-300 border-2 border-green-700 outline-none p-2' type="text" placeholder='Task Group Name'
                 onChange={(e) => {
                   setGroupName(e.target.value)
                 }}
@@ -421,13 +463,16 @@ function Personaltasks() {
               <button className='p-3 bg-gradient-to-r 
             from-green-700 to-green-500 rounded-2xl
             shadow-md shadow-green-300 hover:from-green-600 hover:to-green-600' onClick={() => {
-                  createNewGroup()
-                }}>Create New Group</button>
+                  createNewGroup(currentGroup)
+                }}>{currentGroup?"Update":"Create Group"}</button>
             </div>
           </div>
         </div>
 
       </div>
+
+      
+
     </div>
   )
 }

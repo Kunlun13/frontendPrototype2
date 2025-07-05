@@ -42,12 +42,6 @@ function Sidemenu() {
         </NavLink>
         </div>
     </div>
-    <div className='m-1 w-full'>
-            <button className=" hover:text-pink-700
-          transition-all duration-200 text-gray-400 cursor-default text-center p-5 text-md rounded-3xl active:text-pink-800">
-            Join Group
-            </button>
-        </div>
     </div>
   )
 }

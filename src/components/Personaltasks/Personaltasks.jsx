@@ -38,7 +38,7 @@ function Personaltasks() {
         const data = await res.json()
         setList(data)
         // setLoading(false)
-        console.log(data)
+        // console.log(data)
       } catch (error) {
         console.log(error)
       }

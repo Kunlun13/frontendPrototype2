@@ -10,6 +10,7 @@ import Signin from './components/Signin/Signin.jsx'
 import Userlayout from './components/Userlayout/Userlayout.jsx'
 import Personaltasks from './components/Personaltasks/Personaltasks.jsx'
 import Mygroup from './components/Mygroup/Mygroup.jsx'
+import Settings from './components/Settings/Settings.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,9 +22,9 @@ const router = createBrowserRouter(
     </Route>
     <Route path=":id" element={<Userlayout/>}>
       <Route path='personal_tasks' element={<Personaltasks/>} />
-      <Route path='' element={<div className='text-white'>hahaha</div>} />
+      <Route path='' element={<div className='text-white'></div>} />
       <Route path='groups' element={<Mygroup/>} />
-      <Route path='settings' element={<div className='text-white'>hahaha</div>} />
+      <Route path='settings' element={<Settings/>} />
     </Route>
     </Route>
   )

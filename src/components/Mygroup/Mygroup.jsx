@@ -12,6 +12,8 @@ function Mygroup() {
   const [list, setList] = useState([])
   const [tasks, setTasks] = useState([])
   const [currentGroup, setCurrentGroup] = useState("")
+  const [joinGroupId, setJoinGroupId] = useState("")
+  const [userAccess, setUserAccess] = useState("none")
 
   let jason = []
 
@@ -36,9 +38,14 @@ function Mygroup() {
         }
 
         const data = await res.json()
+        for (let index = 0; index < data.length; index++) {
+          const x = await amIOwner(data[index]._id)
+          console.log(data[index]._id)
+          data[index].isOwner = x
+        }
         setList(data)
         // setLoading(false)
-        console.log(data)
+        // console.log(data)
       } catch (error) {
         console.log(error)
       }
@@ -72,7 +79,7 @@ function Mygroup() {
       }
       
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       return data.permission
     } catch (error) {
       console.log("Some Error Occured")
@@ -306,6 +313,37 @@ function Mygroup() {
   }, 
   [])
 
+  async function amIOwner(group)
+  {
+    const req = {
+      group
+    }
+    
+    try {
+      const res = await fetch("http://localhost:13000/api/v1/groups/amIOwner", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(req),
+      })
+
+      if (!res.ok) {
+        console.log(res)
+        return console.log("response is not Ok!!")
+      }
+      // setLoading(true)
+      const data = await res.json()
+      // console.log(data)
+      return data.isOwner;
+    } catch (error) {
+      console.log(error)
+      console.log("Some Error occured while creating group!!")
+    }
+  }
+
+
 
   return (
     <div className='flex relative w-full bg-gray-800 rounded-2xl h-full text-white border-10 border-gray-600  flex-wrap overflow-y-auto py-5' style={{ WebkitScrollSnapType: 'block' }}>
@@ -329,6 +367,10 @@ function Mygroup() {
                   <div className='text-gray-300'>{element.createdAt.substring(0, 10).split("-").reverse().join(".")}</div>
                   <div className='text-center text-purple-300 mt-5' >About Group</div>
                   <div className='text-center text-gray-300'>{element.aboutGroup}</div>
+                  <div className='text-center text-purple-300 mt-5' >Group Id</div>
+                  <div className='text-center  text-gray-300 w-full px-10 py-1' onClick={(e)=>{
+                    e.stopPropagation()
+                  }}>{element._id}</div>
                 </div>
               </div>
               <div className='flex justify-around mt-auto  mt-30'>
@@ -347,7 +389,7 @@ function Mygroup() {
                   }
 
                   try {
-                    const res = await fetch("http://localhost:13000/api/v1/users/removeGroup", {
+                    const res = await fetch("http://localhost:13000/api/v1/groups/removeGroup", {
                       method: "POST",
                       headers: {
                         "Content-Type": "application/json"
@@ -357,8 +399,7 @@ function Mygroup() {
                     })
               
                     if (!res.ok) {
-                      console.log(res)
-                      return console.log("response is not Ok!!")
+                      return console.log(await res.text())
                     }
                     displayTodos()
                     // setLoading(true)
@@ -367,8 +408,8 @@ function Mygroup() {
                     console.log(error)
                     console.log("Some Error occured while creating group!!")
                   }
-                  
                 }}
+                style = {{display: (element.isOwner)?"block":"none"}}
                 >Delete</button>
               </div>
             </div>
@@ -452,7 +493,7 @@ function Mygroup() {
           }
           </div>
         </div>
-          <div className='mt-10'><button type="button" className='bg-green-300' onClick={()=>{
+          <div className='mt-10'><button type="button" className='bg-green-300'  onClick={()=>{
             addingNewTask()
           }}>Add New Task</button>
           <div className='mt-5'>
@@ -474,16 +515,16 @@ function Mygroup() {
           }}>Back</button>
         </div>
 
-        <div className='flex justify-center items-center w-full self-center h-full'>
+        <div className='flex justify-around items-center w-full self-center h-full'>
 
           <div>
-
+            
             <div className='m-5'>
               <input value={groupName} className='text-green-300 border-2 border-green-700 outline-none p-2' type="text" placeholder='Task Group Name'
                 onChange={(e) => {
                   setGroupName(e.target.value)
                 }}
-              />
+                />
             </div>
             <div className='m-5'>
               <textarea value={groupDetail} id="" className='text-green-300 border-2 border-green-700 p-2 outline-none w-64 h-30'
@@ -497,10 +538,48 @@ function Mygroup() {
               <button className='p-3 bg-gradient-to-r 
             from-green-700 to-green-500 rounded-2xl
             shadow-md shadow-green-300 hover:from-green-600 hover:to-green-600' onClick={() => {
-                  createNewGroup(currentGroup)
-                }}>{currentGroup?"Update":"Create Group"}</button>
-            </div>
+              createNewGroup(currentGroup)
+            }}>{currentGroup?"Update":"Create Group"}</button>
+                </div>
+                
           </div>
+
+                {currentGroup?"":<div className='mt-5 flex flex-col justify-center items-center text-center'>
+                  <div className='mb-20 text-green-500 text-xl'>Join Existing Group</div>
+                <div className=''>
+                  <input type="text" className='text-green-300 border-2 border-green-700 outline-none p-2' placeholder='Group Id' value={joinGroupId} onChange={(e)=>{
+                    setJoinGroupId(e.target.value)
+                  }}/>
+                  <div>
+                  <button className='m-10 p-3 bg-gradient-to-r 
+            from-green-700 to-green-500 rounded-2xl
+            shadow-md shadow-green-300 hover:from-green-600 hover:to-green-600' onClick={async (e)=>{
+              e.stopPropagation()
+              const req = {
+                group: joinGroupId
+              }
+              try {
+                const res = await fetch("http://localhost:13000/api/v1/groups/joinGroup",
+                {
+                  method:"POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify(req),
+                  credentials: "include",
+                })
+                showNewGroup("", "", "")
+                setJoinGroupId("")
+                displayTodos()
+              } catch (error) {
+                return console.log(error)
+              }
+            }}>Join Group</button>
+                  </div>
+                  </div>
+
+                </div>}
+          
         </div>
 
       </div>

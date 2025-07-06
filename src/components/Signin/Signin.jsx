@@ -61,12 +61,17 @@ function Signin() {
   }
 
   return (
-    <div className='flex justify-center items-center bg-gray-950 h-full text-lg text-pink-300 p-10'>
-      <div className='bg-gray-900 w-96 rounded-2xl'>
-        <div className='flex justify-center m-10'>
+    <div className='flex justify-center items-center  h-full text-lg text-pink-300 p-10 mt-50'>
+      <div className='relative w-96 rounded-2xl'
+      style={{backgroundImage:"url('/src/assets/depositphotos_275795040-stock-photo-texture-of-bark-wood-use.jpg')", boxShadow:"1px 1px 80px black"}}>
+
+        <div className='bg-slate-700/50 rounded-2xl p-10'>
+
+        
+        <div className='flex justify-center relative'>
         <img src="src/assets/react.svg" alt="Image" />
         </div>
-          <form className='m-10'>
+          <form>
             <ul>
               <li className='text-center'>
                 <div className='m-5'>
@@ -87,16 +92,17 @@ function Signin() {
                 />
                 </li>
                 </div>
-                <div className='m-5'>
+                
 
               <li className='text-center'>
                 <button type="submit" onClick={Login} className='bg-pink-400 p-1 hover:bg-pink-500
                 shadow-sm shadow-black active:inset-shadow-black active:inset-shadow-sm text-pink-800 mt-5 mb-1 rounded-xl'>Sign In</button>
                 <div>{""}</div>
               </li>
-                </div>
+
             </ul>
           </form>
+          </div>
       </div>
     </div>
   )

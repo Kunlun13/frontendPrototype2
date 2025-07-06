@@ -5,6 +5,9 @@ function Settings() {
     const navigate = useNavigate()
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
+    const [oldPass, setOldPass] = useState("")
+    const [newPass, setNewPass] = useState("")
     const [passwordPanel, setPasswordPanel] = useState("none")
 
     const getProfile = async ()=>{
@@ -37,6 +40,44 @@ function Settings() {
     }
 
     getProfile()
+
+    const changePassword = async () =>{
+        if(oldPass == "" || newPass == "")
+        return setErrorMessage("Password Cannot be Empty")
+        setErrorMessage("")
+
+        const req = {
+          oldP: oldPass,
+          newP: newPass,
+        }
+        console.log(oldPass)
+        console.log(newPass)
+        setOldPass("")
+        setNewPass("")
+        try {
+          const res = await fetch("http://localhost:13000/api/v1/users/changePassword", {
+            method: "POST",
+            headers:{
+              "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(req),
+            credentials: "include"
+          })
+
+          if(!res.ok)
+          {
+            if(res.status==401)
+            return setErrorMessage("Wrong Password")
+
+            return
+          }
+
+          console.log("Password changed Successfully")
+          pasword()
+        } catch (error) {
+            // console.log(error)
+        }
+    }
 
     const pasword = () =>{
         if(passwordPanel=='none')
@@ -87,12 +128,26 @@ function Settings() {
         <div className="flex flex-col h-full items-center justify-center">
             <div className="m-2">
 
-            <input className="bg-slate-400 rounded-md p-2" type="password" placeholder="Old Password" name=""  />
+            <input className="bg-slate-400 outline-none rounded-md p-2" type="password" placeholder="Old Password" name="" onChange={(e)=>{
+              setOldPass(e.target.value)
+            }}  value={oldPass}/>
             </div>
             <div className="m-2">
 
-            <input className="bg-slate-400 rounded-md p-2" type="password" placeholder="New Password" name="" />
+            <input className="bg-slate-400 outline-none rounded-md p-2" type="password" onChange={(e)=>{
+              setNewPass(e.target.value)
+              // console.log(newPass)
+            }} value={newPass} placeholder="New Password" name="" />
             </div>
+
+            <div>
+              <button type="submit" className="m-5 p-3 bg-gradient-to-r 
+            from-green-700 to-green-500 rounded-2xl
+            shadow-md shadow-green-300 hover:from-green-600 hover:to-green-600 text-white text-xl" onClick={()=>{
+              changePassword()
+            }}>Submit</button>
+            </div>
+            <div className="text-red-400 text-sm">{errorMessage}</div>
         </div>
         </div>
         </div>

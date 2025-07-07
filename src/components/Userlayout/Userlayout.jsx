@@ -6,14 +6,15 @@ function Userlayout() {
     const { id } = useParams()
   return (
     <div className='h-full flex flex-col'>
-        <div className='bg-gray-900 p-1 pl-10'>
-            <img src="../src\assets\react.svg" alt="Img not found"  />
+        <div className='text-white p-1 pl-4'>
+          Cozify
+            {/* <img src="../src\assets\react.svg" alt="Img not found"  /> */}
         </div>
-    <div className='flex p-1 border-8 border-gray-700 h-full w-full bg-gray-950'>
+    <div className='flex p-1 border-8 border-yellow-950 h-full w-full bg-gray-950'>
         <div>
         <Sidemenu/>
         </div>
-    <div className='w-full'>
+    <div className='w-full' style={{backgroundImage:"url('/src/assets/pexels-freephotos-64779.jpg')", backgroundSize:"cover", backgroundPosition:"center"}}>
     <Outlet/>
     </div>
     </div>

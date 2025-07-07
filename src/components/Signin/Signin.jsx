@@ -75,9 +75,10 @@ function Signin() {
             <ul>
               <li className='text-center'>
                 <div className='m-5'>
-                <input type="text" className='bg-gray-800 p-1 w-full outline-none  rounded-lg' 
+                <input type="text" className='bg-yellow-900 p-1 w-full outline-none  rounded-lg' 
                 placeholder='Username'
                 value={username}
+                style={{boxShadow:"-2px -2px 2px black,inset 1px 1px 2px black,2px 2px 2px black,inset -1px -1px 2px black  "}}
                 onChange={(e)=>{setUsername(e.target.value)}}
                 />
               </div>
@@ -85,8 +86,9 @@ function Signin() {
                 <div className='m-5'>
 
               <li className='text-center w-full outline-none'>
-                <input type="password" className='bg-gray-800 p-1  outline-none w-full  rounded-lg' 
+                <input type="password" className='bg-yellow-900 p-1  outline-none w-full  rounded-lg' 
                 placeholder='Enter Password'
+                style={{boxShadow:"-2px -2px 2px black,inset 1px 1px 2px black,2px 2px 2px black,inset -1px -1px 2px black  "}}
                 value={password}
                 onChange={(e)=>{setPassword(e.target.value)}}
                 />

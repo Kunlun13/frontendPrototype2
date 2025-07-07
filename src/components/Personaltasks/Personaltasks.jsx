@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 function Personaltasks() {
 
-  const style1 = 'h-36 w-full sm:h-80 sm:w-60 rounded-3xl bg-gradient-to-b from-pink-800 to-purple-800  hover:from-pink-700  shadow-2xl shadow-black m-5 flex flex-col'
+  const style1 = 'h-36 w-full sm:h-80 sm:w-60 rounded-lg bg-gradient-to-b from-yellow-800 to-yellow-950  hover:from-yellow-700 relative shadow-2xl shadow-black m-5 flex flex-col'
 
   const style2 = 'h-36 w-full sm:h-80 sm:w-60 rounded-3xl    shadow-sm shadow-black m-5 p-5 flex justify-center items-center text-6xl select-none hover:bg-gradient-to-b to-purple-950 '
 
@@ -276,7 +276,7 @@ function Personaltasks() {
 
 
   return (
-    <div className='flex relative w-full bg-gray-800 rounded-2xl h-full text-white border-10 border-gray-600  flex-wrap overflow-y-auto py-5' style={{ WebkitScrollSnapType: 'block' }}>
+    <div className='flex relative w-full rounded-2xl h-full text-white border-10 border-cyan-900/50  flex-wrap overflow-y-auto py-5' style={{ WebkitScrollSnapType: 'block' }}>
 
       <div className='flex relative h-full w-full overflow-y-auto flex-wrap' style={{ display: taskDisplay }}>
 
@@ -284,36 +284,37 @@ function Personaltasks() {
           list.map((element) => {
             return <div onClick={() => {
               displayTasks(element._id)
-            }} className={style1} style={{ backgroundColor: `#03fcf010` }}
+            }} className={style1} style={{backgroundImage:"url('/src/assets/notebook-paper-background-paper-lines_322958-4454.avif')", backgroundSize:"cover", backgroundPosition:"fit"}}
              >
-              
-              <div className='text-xl text-center mt-10'>
+              <div className='bg-yellow-900/50 rounded-lg h-full w-full'>
+
+              <div className='text-2xl text-center mt-10 text-yellow-950 font-serif'>
                 {element.name}
               </div>
               <div className='flex justify-center'>
 
                 <div className='text-center mt-10 text-xs'>
-                  <div className='text-center text-purple-300' >Created At</div>
-                  <div className='text-gray-300'>{element.createdAt.substring(0, 10).split("-").reverse().join(".")}</div>
-                  <div className='text-center text-purple-300 mt-5' >About Group</div>
-                  <div className='text-center text-gray-300'>{element.aboutGroup}</div>
+                  <div className='text-center text-yellow-950 font-serif font-bold' >Created At</div>
+                  <div className='text-white font-serif'>{element.createdAt.substring(0, 10).split("-").reverse().join(" . ")}</div>
+                  <div className='text-center text-yellow-950 font-serif font-bold mt-5' >About Group</div>
+                  <div className='text-center text-white font-serif'>{(element.aboutGroup=="")?"- -":element.aboutGroup}</div>
                 </div>
               </div>
-              <div className='flex justify-around mt-auto  mt-30'>
-                <div className='text-gray-950 hover:text-gray-400'
+              <div className='flex justify-around mt-10 absolute bottom-0 w-full'>
+                <div className='text-gray-950 hover:text-yellow-200'
                 onClick={(e)=>{
                   e.stopPropagation()
                   showNewGroup(element._id, element.name, element.aboutGroup)
                 }}
                 >Edit</div>
-                <button className='text-gray-950 hover:text-red-400 shadow' 
+                <button className='text-gray-950 hover:text-red-500' 
                 onClick={async (e)=>{
                   e.stopPropagation()
-
+                  
                   const req = {
                     group : element._id,
                   }
-
+                  
                   try {
                     const res = await fetch("http://localhost:13000/api/v1/users/removeGroup", {
                       method: "POST",
@@ -323,14 +324,14 @@ function Personaltasks() {
                       credentials: "include",
                       body: JSON.stringify(req),
                     })
-              
+                    
                     if (!res.ok) {
                       console.log(res)
                       return console.log("response is not Ok!!")
                     }
                     displayTodos()
                     // setLoading(true)
-              
+                    
                   } catch (error) {
                     console.log(error)
                     console.log("Some Error occured while creating group!!")
@@ -340,6 +341,7 @@ function Personaltasks() {
                 >Delete</button>
               </div>
             </div>
+        </div>
           })
         }
 
@@ -350,7 +352,7 @@ function Personaltasks() {
         </div>
 
       </div>
-      <div className='absolute flex flex-col p-5 w-full h-full bg-gray-800'
+      <div className='absolute flex flex-col p-5 w-full h-full '
         style={{ display: updateTaskOpacity }} >
         <div className='mb-10' onClick={
           () => { displayTasks() }
@@ -365,8 +367,8 @@ function Personaltasks() {
           
           
             tasks.map(element => {
-            return <div className='border-b-1 border-t-1 border-gray-700 m-1 p-2' 
-            >
+            return <div className=' m-1 p-2' 
+            style={{boxShadow:"1px 1px 10px black"}}>
               <div className='flex justify-between'>
                 <div>{element.name}</div>
                 <div><input type="checkbox" name=""  id="" checked={element.completed} 
@@ -433,7 +435,7 @@ function Personaltasks() {
 
       </div>
 
-      <div className='absolute flex flex-col items-start p-5 w-full h-full bg-gray-800' style={{ display: updateGroupOpacity }} >
+      <div className='absolute flex flex-col items-start p-5 w-full h-full ' style={{ display: updateGroupOpacity }} >
         <div className='w-full flex justify-start '>
           <button className='text-green-400 hover:text-green-300' onClick={() => {
             showNewGroup("", "", "")

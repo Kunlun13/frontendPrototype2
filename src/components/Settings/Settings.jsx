@@ -9,6 +9,7 @@ function Settings() {
     const [oldPass, setOldPass] = useState("")
     const [newPass, setNewPass] = useState("")
     const [passwordPanel, setPasswordPanel] = useState("none")
+    const [displayLogout, setDisplayLogout] = useState("block")
 
     const getProfile = async ()=>{
         const req = {
@@ -81,14 +82,21 @@ function Settings() {
 
     const pasword = () =>{
         if(passwordPanel=='none')
-        setPasswordPanel('block')
+        {
+          setPasswordPanel('block')
+          setDisplayLogout('none')
+        }
         else
-        setPasswordPanel('none')
+        {
+          setPasswordPanel('none')
+          setDisplayLogout('block')
+        }
     }
 
     return (
         <>
-        <div className="relative flex justify-center items-center h-full flex-col">
+        <div className="relative flex justify-center items-center h-full overflow-y-auto flex-col">
+        <div style={{display:`${displayLogout}`}}>
 
         <div className="text-cyan-500">
             
@@ -99,20 +107,20 @@ function Settings() {
         <div>
             <button className="bg-pink-700 p-2 rounded-xl hover:bg-pink-500 active:bg-pink-800 m-5" onClick={pasword}> Change Password</button>
             <button className="bg-red-500 p-2 rounded-xl hover:bg-red-400 active:bg-red-600 m-5" onClick={async ()=>{
-                try {
-                    const res = await fetch("http://localhost:13000/api/v1/users/logout",
-                      {
-                        method: "GET",
-                        headers: {
-                          "Content-Type": "application/json"
-                        },
-                        credentials: "include",
-                      })
-            
+              try {
+                const res = await fetch("http://localhost:13000/api/v1/users/logout",
+                {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  credentials: "include",
+                })
+                
                     if (!res.ok) {
                       return console.log("Oops!!")
                     }
-            
+                    
                     const data = await res.text()
                     console.log(data)
                     // setLoading(false)
@@ -121,20 +129,21 @@ function Settings() {
                     console.log(error)
                   }
                   navigate("../../")
-            }}>Logout</button>
+                }}>Logout</button>
         </div>
-        <div className="absolute bg-slate-950 h-full w-full" style={{display:passwordPanel}}>
-        <button className='text-green-400 hover:text-green-300' onClick={pasword}>Back</button>
+        </div>
+        <div className="absolute h-full w-full" style={{display:passwordPanel}}>
+        <button className='text-yellow-950 p-2 hover:font-bold m-2' onClick={pasword}>Back</button>
         <div className="flex flex-col h-full items-center justify-center">
             <div className="m-2">
 
-            <input className="bg-slate-400 outline-none rounded-md p-2" type="password" placeholder="Old Password" name="" onChange={(e)=>{
+            <input className="border-2 border-yellow-600 rounded-lg shadow-xl bg-yellow-950/70 outline-none p-2" type="password" placeholder="Old Password" name="" onChange={(e)=>{
               setOldPass(e.target.value)
             }}  value={oldPass}/>
             </div>
             <div className="m-2">
 
-            <input className="bg-slate-400 outline-none rounded-md p-2" type="password" onChange={(e)=>{
+            <input className="border-2 border-yellow-600 rounded-lg shadow-xl bg-yellow-950/70 outline-none p-2" type="password" onChange={(e)=>{
               setNewPass(e.target.value)
               // console.log(newPass)
             }} value={newPass} placeholder="New Password" name="" />

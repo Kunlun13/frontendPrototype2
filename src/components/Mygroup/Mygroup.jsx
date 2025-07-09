@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 
 function Mygroup() {
-  const style1 = 'h-36 w-full sm:h-80 sm:w-60 rounded-3xl bg-gradient-to-b from-pink-800 to-purple-800  hover:from-pink-700  shadow-2xl shadow-black m-5 flex flex-col'
+  const style1 = 'h-36 w-full sm:h-80 sm:w-60 rounded-lg bg-gradient-to-b from-pink-800 to-purple-800  hover:from-pink-700 relative shadow-2xl shadow-black m-5 flex flex-col'
 
   const style2 = 'h-36 w-full sm:h-80 sm:w-60 rounded-3xl    shadow-sm shadow-black m-5 p-5 flex justify-center items-center text-6xl select-none hover:bg-gradient-to-b to-purple-950 '
 
@@ -346,7 +346,7 @@ function Mygroup() {
 
 
   return (
-    <div className='flex relative w-full bg-gray-800 rounded-2xl h-full text-white border-10 border-gray-600  flex-wrap overflow-y-auto py-5' style={{ WebkitScrollSnapType: 'block' }}>
+    <div className='flex relative w-full  rounded-2xl h-full text-white border-10 border-gray-600  flex-wrap overflow-y-auto py-5' style={{ WebkitScrollSnapType: 'block' }}>
 
       <div className='flex relative h-full w-full overflow-y-auto flex-wrap' style={{ display: taskDisplay }}>
 
@@ -354,33 +354,33 @@ function Mygroup() {
           list.map((element) => {
             return <div onClick={() => {
               displayTasks(element._id)
-            }} className={style1} style={{ backgroundColor: `#03fcf010` }}
+            }} className={style1}  style={{backgroundImage:"url('/src/assets/notebook-paper-background-paper-lines_322958-4454.avif')", backgroundSize:"cover", backgroundPosition:"fit"}}
              >
-              
-              <div className='text-xl text-center mt-10'>
+              <div className='bg-yellow-900/50 rounded-lg h-full w-full'>
+              <div className='text-xl text-center mt-10 text-yellow-950 font-serif'>
                 {element.name}
               </div>
               <div className='flex justify-center'>
 
                 <div className='text-center mt-10 text-xs'>
-                  <div className='text-center text-purple-300' >Created At</div>
-                  <div className='text-gray-300'>{element.createdAt.substring(0, 10).split("-").reverse().join(".")}</div>
-                  <div className='text-center text-purple-300 mt-5' >About Group</div>
-                  <div className='text-center text-gray-300'>{element.aboutGroup}</div>
-                  <div className='text-center text-purple-300 mt-5' >Group Id</div>
-                  <div className='text-center  text-gray-300 w-full px-10 py-1' onClick={(e)=>{
+                  <div className='text-center text-yellow-950 font-serif font-bold' >Created At</div>
+                  <div className='text-white font-serif'>{element.createdAt.substring(0, 10).split("-").reverse().join(" . ")}</div>
+                  <div className='text-center text-yellow-950 font-serif font-bold mt-5' >About Group</div>
+                  <div className='text-center text-white font-serif'>{element.aboutGroup}</div>
+                  <div className='text-center text-yellow-950 font-serif font-bold mt-5' >Group Id</div>
+                  <div className='text-center  text-white font-serif w-full px-10 py-1' onClick={(e)=>{
                     e.stopPropagation()
                   }}>{element._id}</div>
                 </div>
               </div>
-              <div className='flex justify-around mt-auto  mt-30'>
-                <div className='text-gray-950 hover:text-gray-400'
+              <div className='flex justify-around mt-10 absolute bottom-0 w-full'>
+                <div className='text-gray-950 hover:text-yellow-200'
                 onClick={(e)=>{
                   e.stopPropagation()
                   showNewGroup(element._id, element.name, element.aboutGroup)
                 }}
                 >Edit</div>
-                <button className='text-gray-950 hover:text-red-400 shadow' 
+                <button className='text-gray-950 hover:text-red-500 hover:font-bold' 
                 onClick={async (e)=>{
                   e.stopPropagation()
 
@@ -412,6 +412,7 @@ function Mygroup() {
                 style = {{display: (element.isOwner)?"block":"none"}}
                 >Delete</button>
               </div>
+              </div>
             </div>
           })
         }
@@ -423,9 +424,9 @@ function Mygroup() {
         </div>
 
       </div>
-      <div className='absolute flex flex-col p-5 w-full h-full bg-gray-800'
+      <div className='absolute flex flex-col p-5 w-full h-full '
         style={{ display: updateTaskOpacity }} >
-        <div className='mb-10' onClick={
+        <div className='text-yellow-100 bg-yellow-950/50 text-lg rounded-lg hover:bg-yellow-900/50 text-center  p-2 m-2' onClick={
           () => { displayTasks() }
         }>
           Back
@@ -508,9 +509,9 @@ function Mygroup() {
 
       </div>
 
-      <div className='absolute flex flex-col items-start p-5 w-full h-full bg-gray-800' style={{ display: updateGroupOpacity }} >
+      <div className='absolute flex flex-col items-start p-5 w-full h-full' style={{ display: updateGroupOpacity }} >
         <div className='w-full flex justify-start '>
-          <button className='text-green-400 hover:text-green-300' onClick={() => {
+          <button className='text-yellow-100 bg-yellow-950 text-lg rounded-lg hover:bg-yellow-900  p-2 m-2' onClick={() => {
             showNewGroup("", "", "")
           }}>Back</button>
         </div>
@@ -520,14 +521,14 @@ function Mygroup() {
           <div>
             
             <div className='m-5'>
-              <input value={groupName} className='text-green-300 border-2 border-green-700 outline-none p-2' type="text" placeholder='Task Group Name'
+              <input value={groupName} className='border-2 border-yellow-600 rounded-lg shadow-xl bg-yellow-950/70 outline-none p-2' type="text" placeholder='Task Group Name'
                 onChange={(e) => {
                   setGroupName(e.target.value)
                 }}
                 />
             </div>
             <div className='m-5'>
-              <textarea value={groupDetail} id="" className='text-green-300 border-2 border-green-700 p-2 outline-none w-64 h-30'
+              <textarea value={groupDetail} id="" className='border-2 border-yellow-600 shadow-xl rounded-lg bg-yellow-950/70 p-2 outline-none w-64 h-30'
                 onChange={(e) => {
                   setGroupDetail(e.target.value)
                 }}
@@ -536,8 +537,8 @@ function Mygroup() {
             <div className='flex justify-center items-center'>
 
               <button className='p-3 bg-gradient-to-r 
-            from-green-700 to-green-500 rounded-2xl
-            shadow-md shadow-green-300 hover:from-green-600 hover:to-green-600' onClick={() => {
+            from-yellow-900 to-yellow-700 rounded-2xl
+            shadow-md shadow-yellow-600 hover:from-yellow-700 active:shadow-yellow-500 hover:to-yellow-900' onClick={() => {
               createNewGroup(currentGroup)
             }}>{currentGroup?"Update":"Create Group"}</button>
                 </div>
@@ -547,13 +548,13 @@ function Mygroup() {
                 {currentGroup?"":<div className='mt-5 flex flex-col justify-center items-center text-center'>
                   <div className='mb-20 text-green-500 text-xl'>Join Existing Group</div>
                 <div className=''>
-                  <input type="text" className='text-green-300 border-2 border-green-700 outline-none p-2' placeholder='Group Id' value={joinGroupId} onChange={(e)=>{
+                  <input type="text" className='border-2 border-yellow-600 shadow-xl rounded-lg bg-yellow-950/70 p-2' placeholder='Group Id' value={joinGroupId} onChange={(e)=>{
                     setJoinGroupId(e.target.value)
                   }}/>
                   <div>
-                  <button className='m-10 p-3 bg-gradient-to-r 
-            from-green-700 to-green-500 rounded-2xl
-            shadow-md shadow-green-300 hover:from-green-600 hover:to-green-600' onClick={async (e)=>{
+                  <button className='p-3 bg-gradient-to-r 
+            from-yellow-900 to-yellow-700 rounded-2xl
+            shadow-md shadow-yellow-600 hover:from-yellow-700 active:shadow-yellow-500 hover:to-yellow-900 mt-15' onClick={async (e)=>{
               e.stopPropagation()
               const req = {
                 group: joinGroupId

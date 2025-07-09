@@ -307,7 +307,7 @@ function Personaltasks() {
                   showNewGroup(element._id, element.name, element.aboutGroup)
                 }}
                 >Edit</div>
-                <button className='text-gray-950 hover:text-red-500' 
+                <button className='text-gray-950 hover:text-red-500 hover:font-bold' 
                 onClick={async (e)=>{
                   e.stopPropagation()
                   
@@ -354,7 +354,7 @@ function Personaltasks() {
       </div>
       <div className='absolute flex flex-col p-5 w-full h-full '
         style={{ display: updateTaskOpacity }} >
-        <div className='mb-10' onClick={
+        <div className='text-yellow-100 bg-yellow-950/50 text-lg rounded-lg hover:bg-yellow-900/50 text-center  p-2 m-2' onClick={
           () => { displayTasks() }
         }>
           Back
@@ -420,15 +420,17 @@ function Personaltasks() {
           }
           </div>
         </div>
-          <div className='mt-10'><button type="button" className='bg-green-300' onClick={()=>{
+          <div className='mt-10'><button type="button" className='p-3 bg-gradient-to-r 
+            from-yellow-900 to-yellow-700 rounded-2xl
+            shadow-md shadow-yellow-600 hover:from-yellow-700 active:shadow-yellow-500 hover:to-yellow-900' onClick={()=>{
             addingNewTask()
           }}>Add New Task</button>
           <div className='mt-5'>
-            <input type="text" value={newTaskName} onChange = {(e)=>{
+            <input className='border-2 border-yellow-600 shadow-xl rounded-lg bg-yellow-950/70 mr-5 p-1' type="text" value={newTaskName} onChange = {(e)=>{
               setNewTaskName(e.target.value)
             }} placeholder='Task Name'/>
 
-            <input type="text" placeholder='Task Details' value={newTaskDetails} onChange = {(e)=>{
+            <input type="text" className='border-2 border-yellow-600 shadow-xl rounded-lg p-1 bg-yellow-950/70' placeholder='Task Details' value={newTaskDetails} onChange = {(e)=>{
               setNewTaskDetails(e.target.value)}}/>
           </div>
           </div>
@@ -437,7 +439,7 @@ function Personaltasks() {
 
       <div className='absolute flex flex-col items-start p-5 w-full h-full ' style={{ display: updateGroupOpacity }} >
         <div className='w-full flex justify-start '>
-          <button className='text-green-400 hover:text-green-300' onClick={() => {
+          <button className='text-yellow-100 bg-yellow-950/50 text-lg rounded-lg hover:bg-yellow-900/50 text-center  p-2 m-2' onClick={() => {
             showNewGroup("", "", "")
           }}>Back</button>
         </div>
@@ -447,14 +449,14 @@ function Personaltasks() {
           <div>
 
             <div className='m-5'>
-              <input value={groupName} className='text-green-300 border-2 border-green-700 outline-none p-2' type="text" placeholder='Task Group Name'
+              <input value={groupName} className='border-2 border-yellow-600 rounded-lg shadow-xl bg-yellow-950/70 outline-none p-2' type="text" placeholder='Task Group Name'
                 onChange={(e) => {
                   setGroupName(e.target.value)
                 }}
               />
             </div>
             <div className='m-5'>
-              <textarea value={groupDetail} id="" className='text-green-300 border-2 border-green-700 p-2 outline-none w-64 h-30'
+              <textarea value={groupDetail} id="" className=' border-2 border-yellow-600 shadow-xl rounded-lg bg-yellow-950/70 p-2 outline-none w-64 h-30'
                 onChange={(e) => {
                   setGroupDetail(e.target.value)
                 }}
@@ -463,8 +465,8 @@ function Personaltasks() {
             <div className='flex justify-center items-center'>
 
               <button className='p-3 bg-gradient-to-r 
-            from-green-700 to-green-500 rounded-2xl
-            shadow-md shadow-green-300 hover:from-green-600 hover:to-green-600' onClick={() => {
+            from-yellow-900 to-yellow-700 rounded-2xl
+            shadow-md shadow-yellow-600 hover:from-yellow-700 active:shadow-yellow-500 hover:to-yellow-900' onClick={() => {
                   createNewGroup(currentGroup)
                 }}>{currentGroup?"Update":"Create Group"}</button>
             </div>

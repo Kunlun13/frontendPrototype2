@@ -2,7 +2,7 @@ import React from 'react'
 
 function Home() {
   return (
-    <div className='h-full'>
+    <div className='h-full text-white p-10'>
       <h1 className='text-7xl text-center'>
         <span className='text-4xl'>
         Welcome to
@@ -10,7 +10,7 @@ function Home() {
       </h1>
       <p className='text-center text-lg'>Tasks with a Touch of Calm</p>
 
-<h2 className='m-20 text-lg'>
+<h2 className='my-10 text-lg'>
 Organize your life, one cozy task at a time.
 </h2>
 
@@ -20,34 +20,39 @@ Organize your life, one cozy task at a time.
 
 Whether you're sipping your morning coffee or wrapping up your day, Cozify helps you manage tasks without the chaos.
 </p>
-
+<br />
 <ul>
   <li>✦ Private Tasks to stay on top of personal goals.</li>
   <li>✦ Group Tasks to collaborate effortlessly with friends or teammates.</li>
   <li>✦ All wrapped in a warm, paper-and-coffee aesthetic designed to keep you focused and relaxed.</li>
 </ul>
+<br />
 
 
 
 
-Call to Action:
+<br />
 📝 Get started and make your to-do list feel less like a chore – and more like leisure.
 <h2>
+<br />
 
 Optional Section Titles (for Feature Highlights):
 </h2>
 
+<br />
 <p>
 
 ✅ Stay Personal. Stay Productive.
 Keep track of your personal to-dos in a space that feels uniquely yours.
 </p>
+<br />
 <p>
 
 🤝 Team Up without Stress.
 Shared task lists and group boards help you sync up without the mess.
 
 </p>
+<br />
 <p>
 
 ☕ Built for Calm Focus.

@@ -95,7 +95,7 @@ function Settings() {
 
     return (
         <>
-        <div className="relative flex justify-center items-center h-full overflow-y-auto flex-col">
+        <div className="relative flex justify-center items-center h-full overflow-y-auto flex-col bg-yellow-950/50">
         <div style={{display:`${displayLogout}`}}>
 
         <div className="text-cyan-500">
@@ -105,7 +105,9 @@ function Settings() {
             
         </div>
         <div>
-            <button className="bg-pink-700 p-2 rounded-xl hover:bg-pink-500 active:bg-pink-800 m-5" onClick={pasword}> Change Password</button>
+            <button className='p-3 bg-gradient-to-r 
+            from-yellow-900 to-yellow-700 rounded-2xl
+            shadow-md shadow-yellow-600 hover:from-yellow-700 active:shadow-yellow-500 hover:to-yellow-900 transition-all tran' onClick={pasword}> Change Password</button>
             <button className="bg-red-500 p-2 rounded-xl hover:bg-red-400 active:bg-red-600 m-5" onClick={async ()=>{
               try {
                 const res = await fetch("http://localhost:13000/api/v1/users/logout",
@@ -133,7 +135,7 @@ function Settings() {
         </div>
         </div>
         <div className="absolute h-full w-full" style={{display:passwordPanel}}>
-        <button className='text-yellow-950 p-2 hover:font-bold m-2' onClick={pasword}>Back</button>
+        <button className='text-yellow-700 rounded-2xl bg-yellow-950/50 p-2 hover:font-bold m-2' onClick={pasword}>Back</button>
         <div className="flex flex-col h-full items-center justify-center">
             <div className="m-2">
 

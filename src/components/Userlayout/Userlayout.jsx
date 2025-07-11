@@ -6,8 +6,11 @@ function Userlayout() {
     const { id } = useParams()
   return (
     <div className='h-full flex flex-col'>
-        <div className='text-white p-1 pl-4'>
-          Cozify
+        <div className='text-white bg-yellow-950/50 p-1 pl-4'>
+            {/* <img 
+            src="../src/assets/pngimg.com - mug_coffee_PNG16824.png" className='h-10 inline mx-2' alt="Image not found" /> */}
+          Do it with Leisure......
+
             {/* <img src="../src\assets\react.svg" alt="Img not found"  /> */}
         </div>
     <div className='flex p-1 border-8 border-yellow-950 h-full w-full bg-gray-950'>

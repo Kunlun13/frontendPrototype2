@@ -6,10 +6,16 @@ function Sidemenu() {
 
   return (
     <div className='h-full w-2xs bg-gray-900 m-1 rounded-lg flex flex-col items-center' style={{backgroundImage:"url('/src/assets/depositphotos_275795040-stock-photo-texture-of-bark-wood-use.jpg')"}}>
-        <div className='bg-slate-700/50 rounded-2xl h-full w-full'>
+        <div className='bg-slate-700/50 rounded-2xl h-full w-full flex flex-col justify-center items-center'>
+        <div className=''>
 
-        <div className='m-20'>
-            <img src="../src/assets/react.svg" alt="Image not found" />
+            <div>
+            <img src="../src/assets/pngimg.com - mug_coffee_PNG16824.png" className='h-15' alt="Image not found" />
+            </div>
+
+            <div className='text-white font-serif text-3xl text-center'>
+        Cozify
+            </div>
         </div>
         <div className='w-full flex flex-col items-center gap-5'>
 
